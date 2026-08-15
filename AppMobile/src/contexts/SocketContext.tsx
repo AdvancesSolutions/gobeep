@@ -3,7 +3,7 @@ import { io, Socket } from 'socket.io-client';
 import { Linking } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-const TV_SERVER = 'http://192.168.15.3:3001';
+const TV_SERVER = 'http://192.168.15.3:3002';
 const PAIR_STORAGE_KEY = '@beepapp_tv_pair';
 
 export type PairStatus = 'idle' | 'pairing' | 'paired' | 'error';

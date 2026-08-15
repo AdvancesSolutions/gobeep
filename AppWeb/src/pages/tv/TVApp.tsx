@@ -7,7 +7,7 @@ import type { Channel } from '../../services/iptvService';
 import { getSavedPlaylists, fetchChannelsFromPlaylist } from '../../services/iptvService';
 import { fetchBeepixBalance, storeBalance } from '../../services/beepixService';
 
-const SOCKET_URL = 'http://192.168.15.3:3001';
+const SOCKET_URL = 'http://192.168.15.3:3002';
 
 export default function TVApp() {
   const [socket, setSocket] = useState<Socket | null>(null);

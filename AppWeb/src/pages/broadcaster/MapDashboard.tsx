@@ -7,7 +7,7 @@ import { io } from 'socket.io-client';
 import { PieChart as RechartsPie, Pie, Cell, ResponsiveContainer, Tooltip, BarChart, Bar, XAxis, YAxis } from 'recharts';
 import HeatmapLayer from '../../components/HeatmapLayer';
 
-const socket = io('http://localhost:3001');
+const socket = io('http://localhost:3002');
 
 interface UserData {
   name: string;

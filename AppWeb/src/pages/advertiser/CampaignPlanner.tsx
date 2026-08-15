@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { Megaphone, Target, DollarSign, BarChart3, Clock, Zap, ArrowRight, ShieldCheck, CheckCircle2, TrendingUp, Tv } from 'lucide-react';
 import { io } from 'socket.io-client';
 
-const socket = io('http://localhost:3001');
+const socket = io('http://localhost:3002');
 import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, Cell } from 'recharts';
 
 const INTERESTS = ['Música', 'Esportes', 'Notícias', 'Política', 'Beleza', 'Tecnologia', 'Games', 'Culinária'];

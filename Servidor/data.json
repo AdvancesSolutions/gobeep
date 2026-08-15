@@ -44,10 +44,14 @@
       {
         "emoji": "🔥",
         "ts": 1786676119494
+      },
+      {
+        "emoji": "🔥",
+        "ts": 1786753229390
       }
     ],
     "stats": {
-      "reactionCount": 1,
+      "reactionCount": 2,
       "channels": [
         "c1",
         "c2"

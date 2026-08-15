@@ -25,7 +25,7 @@ import { io } from 'socket.io-client';
 import Constants from 'expo-constants';
 
 const hostIp = Constants.expoConfig?.hostUri?.split(':')[0] || '10.0.2.2';
-const socket = io(`http://${hostIp}:3001`);
+const socket = io(`http://${hostIp}:3002`);
 
 const modelJson = require('../../assets/models/model.json');
 const modelWeights = require('../../assets/models/weights.bin');

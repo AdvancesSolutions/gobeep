@@ -1,7 +1,7 @@
 // Teste: troca de canal celular -> TV + request_channels -> channels_list
 const { io } = require('socket.io-client');
 
-const URL = 'http://192.168.15.3:3001';
+const URL = 'http://192.168.15.3:3002';
 const tv = io(URL, { transports: ['websocket'] });
 const mobile = io(URL, { transports: ['websocket'] });
 

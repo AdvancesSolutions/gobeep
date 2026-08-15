@@ -1,6 +1,6 @@
 const { io } = require('socket.io-client');
 
-const URL = 'http://localhost:3001';
+const URL = 'http://localhost:3002';
 const log = (...a) => console.log('[test]', ...a);
 let failures = 0;
 const assert = (cond, msg) => { if (!cond) { failures++; log('FALHOU:', msg); } else log('OK:', msg); };
@@ -34,7 +34,7 @@ function run() {
 
   // Saldo HTTP apos pareamento
   setTimeout(() => {
-    require('http').get(`http://localhost:3001/saldo/${pin}`, (res) => {
+    require('http').get(`http://localhost:3002/saldo/${pin}`, (res) => {
       let body = '';
       res.on('data', (c) => (body += c));
       res.on('end', () => {

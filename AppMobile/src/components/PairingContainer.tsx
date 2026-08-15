@@ -55,10 +55,13 @@ export default function PairingContainer({ onPairSuccess, onClose }: PairingCont
     setScanned(true);
     Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success).catch(() => {});
 
-    // Suporta link formato beep://pair?pin=XXXXXX ou apenas o PIN cru
+    // Suporta link formato beepapp://sync?pin=XXXXXX, beep://pair?pin=XXXXXX ou apenas o PIN cru
     let extractedPin = '';
-    if (data.startsWith('beep://pair?pin=')) {
-      extractedPin = data.replace('beep://pair?pin=', '').substring(0, 6);
+    if (data.includes('pin=')) {
+      const parts = data.split('pin=');
+      if (parts.length > 1) {
+        extractedPin = parts[1].substring(0, 6);
+      }
     } else if (/^\d{6}$/.test(data.trim())) {
       extractedPin = data.trim();
     }

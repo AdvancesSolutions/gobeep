@@ -9,7 +9,7 @@ import { useAuth } from '../../contexts/AuthContext';
 import Animated, { FadeIn, FadeOut, ZoomIn, ZoomOut, BounceIn } from 'react-native-reanimated';
 
 const hostIp = Constants.expoConfig?.hostUri?.split(':')[0] || '10.0.2.2';
-const socket = io(`http://${hostIp}:3001`);
+const socket = io(`http://${hostIp}:3002`);
 
 export default function TabLayout() {
   const { user } = useAuth();

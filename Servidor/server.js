@@ -32,7 +32,7 @@ const express = require('express');
 const cors = require('cors');
 const { Server } = require('socket.io');
 
-const PORT = process.env.PORT || 3001;
+const PORT = process.env.PORT || 3002;
 const DATA_FILE = path.join(__dirname, 'data.json');
 
 // ---- Estado em memória (persistido em data.json) ----
@@ -151,7 +151,8 @@ io.on('connection', (socket) => {
     if (typeof ack === 'function') ack(ok);
     socket.emit('paired', ok);
     socket.emit('pairStatus', 'paired');
-    if (tvSocketId) io.to(tvSocketId).emit('pair_success', { pin, beepix: users[pin].beepix });
+    const targetTv = users[pin].tvId || tvSocketId;
+    if (targetTv) io.to(targetTv).emit('pair_success', { pin, beepix: users[pin].beepix });
     console.log('[beepapp] pareado PIN', pin);
   });
 
@@ -172,7 +173,8 @@ io.on('connection', (socket) => {
     else if (tvSocketId) users[p].tvId = tvSocketId;
     save();
     socket.emit('pair_success', { pin: p, beepix: users[p].beepix });
-    if (tvSocketId) io.to(tvSocketId).emit('pair_success', { pin: p, beepix: users[p].beepix });
+    const targetTv = users[p].tvId || tvSocketId;
+    if (targetTv) io.to(targetTv).emit('pair_success', { pin: p, beepix: users[p].beepix });
   });
 
   // ---- Auto-vínculo por rede (mesma sub-rede, sem PIN) ----

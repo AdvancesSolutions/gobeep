@@ -4,7 +4,7 @@
 // em localStorage, e finalmente para um valor padrão. Quando o backend passar a
 // emitir 'saldo_atualizado' pelo socket, basta chamar setBeepix() a partir dele.
 
-const API_BASE = 'http://192.168.15.3:3001';
+const API_BASE = 'http://192.168.15.3:3002';
 const STORAGE_KEY = '@beepapp_beepix_balance';
 const DEFAULT_BALANCE = 0;
 

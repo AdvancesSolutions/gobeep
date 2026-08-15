@@ -4,7 +4,7 @@ import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContai
 import { initialVouchers, type Voucher } from '../../data/vouchers';
 import { io } from 'socket.io-client';
 
-const socket = io("http://localhost:3001");
+const socket = io("http://localhost:3002");
 
 const REDEEM_DATA = [
   { name: 'Seg', resgates: 400 },

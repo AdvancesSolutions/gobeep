@@ -25,7 +25,7 @@ import Constants from 'expo-constants';
 // Get the actual local IP address from Expo's dev server to ensure physical devices can connect
 const debuggerHost = Constants.expoConfig?.hostUri;
 const hostIp = debuggerHost?.split(':')[0] || '10.0.2.2';
-const socketUrl = 'http://' + hostIp + ':3001';
+const socketUrl = 'http://' + hostIp + ':3002';
 
 const socket = io(socketUrl);
 

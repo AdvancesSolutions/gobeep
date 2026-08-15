@@ -6,7 +6,7 @@ import Constants from 'expo-constants';
 import * as Haptics from 'expo-haptics';
 
 const hostIp = Constants.expoConfig?.hostUri?.split(':')[0] || '10.0.2.2';
-const socket = io(`http://${hostIp}:3001`);
+const socket = io(`http://${hostIp}:3002`);
 
 export type Transaction = {
   id: number;

@@ -14,7 +14,7 @@ import Constants from 'expo-constants';
 import { useAuth } from '../../contexts/AuthContext';
 
 const hostIp = Constants.expoConfig?.hostUri?.split(':')[0] || '10.0.2.2';
-const socket = io(`http://${hostIp}:3001`);
+const socket = io(`http://${hostIp}:3002`);
 
 export default function WalletScreen() {
   const { width } = Dimensions.get('window');
