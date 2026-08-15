@@ -1,0 +1,19 @@
+{
+    "id": "com.beepapp.tv.service",
+    "description": "Service to monitor TV channels in background",
+    "services": [
+        {
+            "name": "com.beepapp.tv.service",
+            "commands": [
+                {
+                    "name": "startMonitoring",
+                    "public": true
+                },
+                {
+                    "name": "stopMonitoring",
+                    "public": true
+                }
+            ]
+        }
+    ]
+}

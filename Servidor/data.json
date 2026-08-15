@@ -1,0 +1,66 @@
+{
+  "111111": {
+    "beepix": 0,
+    "paired": false,
+    "tvId": "cvXXqoG90owYqMNNAAAJ"
+  },
+  "123456": {
+    "beepix": 50,
+    "paired": false,
+    "favorites": [
+      {
+        "id": "ch-1",
+        "name": "Canal Fav"
+      }
+    ],
+    "poll": {
+      "id": "mss8v5pk",
+      "question": "Q?",
+      "options": [
+        "A",
+        "B"
+      ],
+      "tally": [
+        1,
+        0
+      ],
+      "open": false
+    },
+    "nowWatching": {
+      "channelId": "c2",
+      "name": "Canal B",
+      "url": "",
+      "ts": 1786676119894
+    },
+    "reactions": [
+      {
+        "emoji": "🔥",
+        "ts": 1786673460424
+      },
+      {
+        "emoji": "❤️",
+        "ts": 1786673460724
+      },
+      {
+        "emoji": "🔥",
+        "ts": 1786676119494
+      }
+    ],
+    "stats": {
+      "reactionCount": 1,
+      "channels": [
+        "c1",
+        "c2"
+      ],
+      "watchStart": 1786676119494
+    }
+  },
+  "222222": {
+    "beepix": 0,
+    "paired": false
+  },
+  "688350": {
+    "beepix": 0,
+    "paired": false
+  }
+}

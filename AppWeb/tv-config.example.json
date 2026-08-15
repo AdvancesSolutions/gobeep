@@ -1,0 +1,8 @@
+{
+  "_comment": "Preencha com os dados da sua TV LG (modo desenvolvedor ativado). IP exemplo 192.168.15.50. Senha = a que voce definiu ao ativar o Dev Mode na TV.",
+  "tv_ip": "192.168.15.XXX",
+  "tv_port": "9922",
+  "tv_password": "SUA_SENHA_DEV_MODE",
+  "device_name": "beepTV",
+  "project_dir": "D:\\Clientes\\BeepApp\\Projeto\\AppWeb"
+}

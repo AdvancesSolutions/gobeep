@@ -1,0 +1,12 @@
+{
+  "name": "com.beepapp.tv.service",
+  "version": "1.0.0",
+  "description": "Background service for Beep App to read TV channels",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Beep Corp",
+  "license": "ISC",
+  "dependencies": {}
+}

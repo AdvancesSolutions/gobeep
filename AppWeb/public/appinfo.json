@@ -1,0 +1,18 @@
+{
+  "id": "com.beepapp.tv",
+  "version": "1.0.0",
+  "vendor": "Beep Corp",
+  "type": "web",
+  "main": "index.html",
+  "title": "Beep App Dashboard",
+  "appDescription": "O revolucionário painel de engajamento do Beep App para Smart TVs.",
+  "icon": "icon.png",
+  "largeIcon": "largeIcon.png",
+  "bgImage": "bgImage.png",
+  "iconColor": "#ffcc00",
+  "resolution": "1920x1080",
+  "transparent": false,
+  "uiRevision": 2,
+  "requiredPermissions": ["tv.channel"],
+  "disableBackHistoryAPI": false
+}
