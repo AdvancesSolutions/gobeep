@@ -10,10 +10,14 @@ import '../global.css';
 import { useColorScheme } from 'nativewind';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { registerForPushNotificationsAsync } from '../src/utils/notifications';
-import * as Notifications from 'expo-notifications';
 import { router } from 'expo-router';
+import Constants from 'expo-constants';
 import React, { useState } from 'react';
-import Animated, { FadeOut, useSharedValue, useAnimatedStyle, withRepeat, withSequence, withTiming } from 'react-native-reanimated';
+import Animated, { FadeOut, useSharedValue, useAnimatedStyle, withRepeat, withSequence, withTiming, configureReanimatedLogger, ReanimatedLogLevel } from 'react-native-reanimated';
+
+// Desativa o aviso de "strict mode" do Reanimated (dev-only) que, em conjunto
+// com o css-interop, quebra o render de telas com Animated.View/active:*.
+configureReanimatedLogger({ level: ReanimatedLogLevel.warn, strict: false });
 import { View, Image, StyleSheet } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { beepLogoBase64 } from '../constants/logos';
@@ -68,16 +72,22 @@ registerForPushNotificationsAsync().catch(err => {
   console.log('=========================================================\n\n');
 });
 
-// Listeners de Notificação para reagir quando o usuário clica no banner
-Notifications.addNotificationResponseReceivedListener(response => {
-  const url = response.notification.request.content.data.url;
-  if (url) {
-    // Redireciona o usuário para a tela específica enviada na notificação
-    setTimeout(() => {
-      router.push(url as any);
-    }, 500);
-  }
-});
+// Listeners de Notificação para reagir quando o usuário clica no banner.
+// No Expo Go o expo-notifications não suporta push remoto (SDK 53+); por isso
+// o módulo só é carregado fora do Expo Go, evitando o erro nativo.
+if (Constants.appOwnership !== 'expo') {
+  import('expo-notifications').then((Notifications) => {
+    Notifications.addNotificationResponseReceivedListener((response) => {
+      const url = response.notification.request.content.data.url;
+      if (url) {
+        // Redireciona o usuário para a tela específica enviada na notificação
+        setTimeout(() => {
+          router.push(url as any);
+        }, 500);
+      }
+    });
+  });
+}
 
 import { NotificationsProvider } from '../contexts/NotificationsContext';
 import { PointsProvider } from '../contexts/PointsContext';
@@ -136,7 +146,7 @@ function RootLayoutNav() {
             <Stack>
               <Stack.Screen name="index" options={{ headerShown: false }} />
               <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-              <Stack.Screen name="chat" options={{ headerShown: false }} />
+              <Stack.Screen name="chat/[stationId]" options={{ headerShown: false }} />
               <Stack.Screen name="tv-chat" options={{ headerShown: false }} />
               <Stack.Screen name="recognition" options={{ headerShown: false }} />
               <Stack.Screen name="presenter" options={{ headerShown: false }} />

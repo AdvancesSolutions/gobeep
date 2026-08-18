@@ -1,16 +1,16 @@
 import Constants from 'expo-constants';
-import * as Notifications from 'expo-notifications';
 import { Platform } from 'react-native';
 
 export async function registerForPushNotificationsAsync() {
   // Evita o crash no Expo Go
   if (Constants.appOwnership === 'expo') {
-    console.log('Push notifications ignorados no Expo Go para evitar exceção nativa.');
+    console.log('Push notifications ignorados no Expo Go para evitar exceï¿½ï¿½o nativa.');
     return null;
   }
 
   let token;
   try {
+    const Notifications = await import('expo-notifications');
     const { status: existingStatus } = await Notifications.getPermissionsAsync();
     let finalStatus = existingStatus;
 
@@ -25,7 +25,7 @@ export async function registerForPushNotificationsAsync() {
 
     token = (await Notifications.getExpoPushTokenAsync()).data;
   } catch (error) {
-    console.log('Erro de notificação ignorado:', error);
+    console.log('Erro de notificaï¿½ï¿½o ignorado:', error);
   }
 
   return token;

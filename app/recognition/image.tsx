@@ -166,7 +166,7 @@ export default function ImageRecognitionScreen() {
   }, []);
 
   const handleSendReaction = (emoji: string) => {
-    socket.emit('send_reaction', emoji);
+    socket.emit('tv_reaction', emoji);
     Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
   };
 

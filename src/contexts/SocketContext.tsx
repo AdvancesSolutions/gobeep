@@ -3,7 +3,7 @@ import { io, Socket } from 'socket.io-client';
 import { Linking } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-const TV_SERVER = 'http://192.168.15.3:3002';
+const TV_SERVER = 'http://192.168.15.38:3002';
 const PAIR_STORAGE_KEY = '@beepapp_tv_pair';
 
 export type PairStatus = 'idle' | 'pairing' | 'paired' | 'error';
@@ -272,7 +272,10 @@ export const SocketProvider: React.FC<{ children: React.ReactNode }> = ({ childr
 
     // Chat ao vivo: mensagens da TV ou do próprio celular (echo do servidor).
     s.on('chat_message', (msg: any) => {
-      if (msg && msg.text) setChatMessages((prev) => [...prev, msg].slice(-50));
+      if (msg && msg.text) {
+        const mid = msg.id ?? `${msg.from ?? 'x'}_${msg.ts ?? ''}_${msg.text}`;
+        setChatMessages((prev) => prev.some((m) => m.id === mid) ? prev : [...prev, { ...msg, id: mid }].slice(-50));
+      }
     });
 
     // Favoritos unificados: lista vinda da TV ou do próprio celular.
@@ -443,7 +446,10 @@ export const SocketProvider: React.FC<{ children: React.ReactNode }> = ({ childr
   const sendChat = (text: string) => {
     const t = String(text || '').trim();
     if (!t) return;
-    sockRef.current?.emit('chat_message', { text: t, pin: activePin ?? undefined });
+    const id = `m_${Date.now()}_${Math.random().toString(36).slice(2, 8)}`;
+    // Otimista: já mostra a mensagem do celular na hora (igual WhatsApp/Telegram).
+    setChatMessages((prev) => prev.some((m) => m.id === id) ? prev : [...prev, { id, from: 'mobile', text: t, ts: Date.now() }].slice(-50));
+    sockRef.current?.emit('chat_message', { id, text: t, pin: activePin ?? undefined });
   };
   const toggleFavorite = (item: { id: string; name: string; logo?: string; group?: string }) => {
     if (!item?.id) return;

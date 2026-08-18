@@ -17,7 +17,8 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { usePoints } from '../../contexts/PointsContext';
 import { useGamification } from '../../contexts/GamificationContext';
 import { PageHeader } from '../../components/PageHeader';
-import { Audio } from 'expo-av';
+import { useAudioRecorder, RecordingPresets, setAudioModeAsync, requestRecordingPermissionsAsync } from 'expo-audio';
+import type { AudioRecorder } from 'expo-audio';
 import { Platform } from 'react-native';
 import { io } from 'socket.io-client';
 import Constants from 'expo-constants';
@@ -90,11 +91,13 @@ export default function AudioRecognitionScreen() {
     return () => clearInterval(timer);
   }, [multiplierTimeLeft]);
   
-  const recordingRef = useRef<Audio.Recording | null>(null);
+  const recordingRef = useRef<AudioRecorder | null>(null);
 
   // Animation values
   const volumeScale = useSharedValue(1);
   const successScale = useSharedValue(0.5);
+
+  const recorder = useAudioRecorder(RecordingPresets.HIGH_QUALITY);
   
   useEffect(() => {
     let isMounted = true;
@@ -102,7 +105,7 @@ export default function AudioRecognitionScreen() {
     async function startFlow() {
       try {
         console.log('Requesting permissions...');
-        const permission = await Audio.requestPermissionsAsync();
+        const permission = await requestRecordingPermissionsAsync();
         
         if (permission.status !== 'granted') {
           if (isMounted) {
@@ -112,29 +115,31 @@ export default function AudioRecognitionScreen() {
           return;
         }
 
-        await Audio.setAudioModeAsync({
-          allowsRecordingIOS: true,
-          playsInSilentModeIOS: true,
+        await setAudioModeAsync({
+          allowsRecording: true,
+          playsInSilentMode: true,
         });
 
         console.log('Starting recording...');
-        const { recording } = await Audio.Recording.createAsync(
-          Audio.RecordingOptionsPresets.HIGH_QUALITY,
-          (status) => {
-            if (status.isRecording && status.metering !== undefined) {
-              const normalizedVolume = Math.max(0, status.metering + 60) / 60; 
-              const targetScale = 1 + (normalizedVolume * 1.5);
-              volumeScale.value = withTiming(targetScale, { duration: 100 });
-            }
-          },
-          100 
-        );
+        await recorder.prepareToRecordAsync();
+        recorder.record();
 
-        recordingRef.current = recording;
+        recordingRef.current = recorder;
         if (isMounted) setStatus('listening');
+
+        // Animação do pulso baseada no nível de áudio (metering do recorder)
+        const meteringInterval = setInterval(() => {
+          const s = recorder.getStatus();
+          if (s.metering !== undefined) {
+            const normalizedVolume = Math.max(0, s.metering + 60) / 60;
+            volumeScale.value = withTiming(1 + (normalizedVolume * 1.5), { duration: 100 });
+          }
+        }, 100);
 
         // Escuta por 5 segundos para ter uma boa amostra
         await new Promise(resolve => setTimeout(resolve, 5000));
+
+        clearInterval(meteringInterval);
 
         if (!isMounted) return;
         
@@ -144,9 +149,9 @@ export default function AudioRecognitionScreen() {
         Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
         
         console.log('Stopping recording...');
-        await recording.stopAndUnloadAsync();
+        await recorder.stop();
         recordingRef.current = null;
-        const uri = recording.getURI();
+        const uri = recorder.uri;
         
         if (!uri) throw new Error("Não foi possível salvar a gravação.");
 
@@ -244,13 +249,13 @@ export default function AudioRecognitionScreen() {
     return () => {
       isMounted = false;
       if (recordingRef.current) {
-        recordingRef.current.stopAndUnloadAsync().catch(() => {});
+        recordingRef.current.stop().catch(() => {});
       }
     };
   }, []);
 
   const handleSendReaction = (emoji: string) => {
-    socket.emit('send_reaction', emoji);
+    socket.emit('tv_reaction', emoji);
     Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
   };
   const pulseStyle = useAnimatedStyle(() => {

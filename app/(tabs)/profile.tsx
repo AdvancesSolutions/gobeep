@@ -230,6 +230,58 @@ export default function ProfileScreen() {
               <ChevronRight size={20} color="#ffcc00" />
             </TouchableOpacity>
 
+            <TouchableOpacity onPress={() => router.push('/advertiser')} className="bg-card border border-border rounded-2xl p-4 flex-row items-center justify-between shadow-sm mb-3">
+              <View className="flex-row items-center gap-3">
+                <View className="w-10 h-10 rounded-xl bg-primary/10 items-center justify-center">
+                  <Star size={20} color="#ffcc00" />
+                </View>
+                <View>
+                  <Text className="font-bold text-base text-foreground">Anunciante</Text>
+                  <Text className="text-[10px] text-muted-foreground font-medium mt-0.5">Crie e gerencie campanhas publicitárias.</Text>
+                </View>
+              </View>
+              <ChevronRight size={20} color="#ffcc00" />
+            </TouchableOpacity>
+
+            <TouchableOpacity onPress={() => router.push('/politician')} className="bg-card border border-border rounded-2xl p-4 flex-row items-center justify-between shadow-sm mb-3">
+              <View className="flex-row items-center gap-3">
+                <View className="w-10 h-10 rounded-xl bg-green-500/10 items-center justify-center">
+                  <ShieldCheck size={20} color="#22c55e" />
+                </View>
+                <View>
+                  <Text className="font-bold text-base text-foreground">Gabinete do Político</Text>
+                  <Text className="text-[10px] text-muted-foreground font-medium mt-0.5">Painel institucional para mandatos e gabinetes.</Text>
+                </View>
+              </View>
+              <ChevronRight size={20} color="#ffcc00" />
+            </TouchableOpacity>
+
+            <TouchableOpacity onPress={() => router.push('/presenter')} className="bg-card border border-border rounded-2xl p-4 flex-row items-center justify-between shadow-sm mb-3">
+              <View className="flex-row items-center gap-3">
+                <View className="w-10 h-10 rounded-xl bg-primary/10 items-center justify-center">
+                  <Tv size={20} color="#ffcc00" />
+                </View>
+                <View>
+                  <Text className="font-bold text-base text-foreground">Apresentador de TV</Text>
+                  <Text className="text-[10px] text-muted-foreground font-medium mt-0.5">Entre como apresentador e comande a atração.</Text>
+                </View>
+              </View>
+              <ChevronRight size={20} color="#ffcc00" />
+            </TouchableOpacity>
+
+            <TouchableOpacity onPress={() => router.push('/director')} className="bg-card border border-border rounded-2xl p-4 flex-row items-center justify-between shadow-sm mb-3">
+              <View className="flex-row items-center gap-3">
+                <View className="w-10 h-10 rounded-xl bg-primary/10 items-center justify-center">
+                  <Sliders size={20} color="#ffcc00" />
+                </View>
+                <View>
+                  <Text className="font-bold text-base text-foreground">Diretor</Text>
+                  <Text className="text-[10px] text-muted-foreground font-medium mt-0.5">Painel de direção e operação da transmissão.</Text>
+                </View>
+              </View>
+              <ChevronRight size={20} color="#ffcc00" />
+            </TouchableOpacity>
+
             <TouchableOpacity onPress={() => router.push('/audio-director')} className="bg-[#f0e6d2] border border-[#e6d5b8] rounded-2xl p-4 flex-row items-center justify-between shadow-sm">
               <View className="flex-row items-center gap-3">
                 <View className="w-10 h-10 rounded-xl bg-[#e6d5b8] items-center justify-center">

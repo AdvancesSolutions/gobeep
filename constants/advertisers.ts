@@ -22,6 +22,14 @@ export interface Campaign {
   clicks: number;
   reach: number;
   ctr: number;
+  // Espaço premium (anúncio overlay na TV)
+  formato?: 'L' | 'horizontal';
+  squares?: string[];
+  columns?: 1 | 2;
+  horario?: string;
+  tempo?: number;
+  imagem?: string;
+  preco?: number;
 }
 
 export type LeadStatus = "new" | "contacted" | "converted" | "lost";

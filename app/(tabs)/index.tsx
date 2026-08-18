@@ -1,5 +1,5 @@
 import React, { useRef, useState, useMemo } from 'react';
-import { View, Text, ScrollView, TouchableOpacity, Image, StyleSheet, Dimensions } from 'react-native';
+import { View, Text, ScrollView, TouchableOpacity, Image, StyleSheet, Dimensions, Alert } from 'react-native';
 import { router } from 'expo-router';
 import Animated, { FadeIn, FadeInDown, SlideInRight, useAnimatedScrollHandler, useAnimatedStyle, useSharedValue, withRepeat, withSequence, withTiming, Easing, withSpring } from 'react-native-reanimated';
 import { Bell, TrendingUp, Zap, BarChart3, Send, QrCode, Radio, User, Tv, Music, ChevronDown, Trophy, Gamepad2, Podcast, Star, Activity, MessageCircle, Gift, CheckCircle } from 'lucide-react-native';
@@ -101,7 +101,7 @@ export default function HomeScreen() {
   });
 
   const handleSendReaction = (emoji: string) => {
-    socket.emit('send_reaction', emoji);
+    socket.emit('tv_reaction', emoji);
     Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
   };
 

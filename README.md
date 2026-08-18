@@ -1,85 +1,120 @@
-# 🐝 BeepApp - Monorepo
+# BeepApp Mobile Companion 🐝📱
 
-Bem-vindo ao repositório do **BeepApp**, um ecossistema completo de interatividade de segunda tela, integrando Smart TVs, aplicativos móveis e servidores de comunicação em tempo real.
+O **BeepApp Mobile** e o aplicativo de compania gamificado para a rede de telas e Smart TVs do ecossistema **BEEP**. Desenvolvido com foco em alta performance, interatividade em tempo real e design premium.
 
----
-
-## 📁 Estrutura do Projeto
-
-Este é um monorepo contendo os seguintes módulos principais:
-
-### 1. 🖥️ [Painel Administrativo (Raiz)](./)
-Painel web administrativo construído com **React + Vite + shadcn-ui + Tailwind CSS**.
-* **Função:** Gerenciamento de campanhas publicitárias, planejador de vouchers, mapa de calor em tempo real, enquetes e configuração do sistema.
-* **Tecnologias:** React, Vite, Tailwind CSS, TypeScript, Lucide Icons, Recharts.
-
-### 2. 📱 [AppMobile](./AppMobile)
-Aplicativo móvel multiplataforma construído com **Expo (React Native)**.
-* **Função:** Funciona como um controle remoto virtual para a Smart TV, carteira de pontos (Beepix) e de vouchers, participação em enquetes/apostas em tempo real, além de motor local de IA para reconhecimento de áudio.
-* **Tecnologias:** Expo (React Native), TypeScript, Socket.io-client, TensorFlow Lite (TFEngine).
-
-### 3. 📺 [AppWeb (TV / webOS)](./AppWeb)
-Aplicativo web otimizado para rodar em Smart TVs (como LG webOS).
-* **Função:** Player de TV/IPTV via streaming HLS, exibição dinâmica de QR Code para pareamento seguro, enquetes sobrepostas na tela e overlays interativos.
-* **Tecnologias:** React, Vite, HLS.js, Socket.io-client, Leaflet (Mapas).
-
-### 4. ⚙️ [Servidor de Comunicação (WebSocket)](./Servidor)
-Servidor de comunicação em tempo real construído em **Node.js (Express + Socket.io)**.
-* **Função:** Orquestração da comunicação direta e em tempo real entre a Smart TV (AppWeb) e o celular (AppMobile), controle de pareamento, saldo Beepix, reações e sincronização de eventos.
-* **Tecnologias:** Node.js, Express, Socket.io.
-
-### 5. 🛠️ [AppServer](./AppServer)
-Servidor complementar em Node.js de suporte para testes rápidos de conexões WebSocket.
+Este aplicativo permite aos usuarios interagir diretamente com a programacao da TV, enviar reacoes, participar de enquetes, controlar canais e conversar no chat ao vivo integrado a tela da TV.
 
 ---
 
-## 🚀 Como Executar os Projetos
+## 🚀 Principais Recursos
 
-Certifique-se de ter o **Node.js** instalado na sua máquina (recomendado v18 ou superior).
+### 1. 📺 Controle Remoto de TV
+* Interface interativa para mudar de canais, controlar o volume, navegar na grade e enviar comandos chaves (D-Pad).
+* Seletor multitela que permite a um unico celular alternar o controle de multiplas TVs pareadas.
 
-### 1. Rodando o Painel Administrativo (Raiz)
-Na pasta raiz do projeto:
-```sh
-npm install
-npm run dev
-```
-Acesse `http://localhost:5173` no seu navegador.
+### 2. 💬 Chat ao Vivo Integrado
+* Conversas em tempo real sincronizadas instantaneamente com o aplicativo web rodando na TV.
+* Sincronizacao de feed de reacoes (Emojis gigantes na tela da TV) e controle de enquetes ativas.
 
-### 2. Rodando o AppMobile (Expo)
-Entre na pasta do aplicativo móvel:
-```sh
-cd AppMobile
-npm install
-npx expo start
-```
-Abra o aplicativo **Expo Go** no seu celular ou utilize um emulador Android/iOS.
+### 3. ⚡ Conectividade por PIN ou QR Code
+* Tela unica de pareamento ([PairingContainer](src/components/PairingContainer.tsx)) que suporta:
+  * **PIN de 6 digitos** digitado no teclado.
+  * **QR Code Scanner** de alta performance com controle de lanterna (Torch) integrado.
+  * **Vinculo por Rede:** Pareamento automatico na rede local via descoberta UDP/Socket.
 
-### 3. Rodando o AppWeb (TV webOS)
-Entre na pasta da aplicação de TV:
-```sh
-cd AppWeb
-npm install
-npm run dev
-```
-Para compilar e gerar o pacote de instalação `.ipk` para Smart TVs LG webOS:
-```sh
-npm run build:webos
-```
-*(O arquivo gerado será salvo na pasta `AppWeb/webos_build/`)*
+### 4. 🔄 Atualizacoes OTA (Over-The-Air) com Indicador de Progresso
+* Mecanismo nativo de atualizacoes silenciosas do Expo Updates ativado de fabrica no Android.
+* **Modal de Progresso:** Ao carregar uma atualizacao no boot, o aplicativo exibe uma tela de loading animada com uma barra de progresso horizontal amarela (`Atualizando o App... 🐝`) e reinicia automaticamente apos o termino.
 
-### 4. Rodando o Servidor de WebSocket
-Entre na pasta do servidor de comunicação:
-```sh
-cd Servidor
-npm install
-npm run dev
-```
-Por padrão, o servidor rodará na porta `3000`.
+### 5. 🎢 Layout Responsivo e Animacoes Suaves
+* Animacoes fluidas de entrada e saida desenvolvidas em **React Native Reanimated 3**.
+* Reposicionamento e encolhimento inteligente dos avatares e titulos quando o teclado do celular e aberto, evitando que o teclado sobreponha os campos de entrada (inputs).
 
 ---
 
-## 🛠️ Tecnologias Utilizadas no Ecossistema
+## 🛠️ Tecnologias Utilizadas
 
-* **Front-end Web & TV:** React, Vite, Tailwind CSS, TypeScript, Leaflet.
-* **Mobile:** Expo, React Native, NativeWind, TensorFlow.
-* **Back-end:** Node.js, Express, Socket.io.
+* **Framework Base:** React Native & Expo SDK 54 (Expo Router v3)
+* **Linguagem:** TypeScript
+* **Interface & Estilo:** Tailwind CSS / NativeWind
+* **Animacoes:** React Native Reanimated 3
+* **Iconografia:** Lucide React Native
+* **Conectividade:** Socket.io-client (WebSockets na porta `3001` da rede interna)
+* **Sensores & Camera:** Expo Camera (CameraView com barcode scanner) e Expo Haptics (retorno vibratorio).
+
+---
+
+## 💻 Como Rodar o Projeto Localmente
+
+### Pré-requisitos
+* Node.js v18 ou superior
+* Expo CLI instalado globalmente (`npm install -g expo-cli`)
+* Emulator Android ou Celular Fisico conectado
+
+### Instalação
+1. Clone o projeto e instale as dependencias:
+   ```bash
+   npm install
+   ```
+
+2. Inicie o Metro Server de desenvolvimento:
+   ```bash
+   npx expo start
+   ```
+
+---
+
+## 📦 Como Compilar o APK Release Localmente
+
+A compilacao local e feita usando o Gradle direto do Android SDK na sua maquina Windows.
+
+1. **Configurar as Variaveis de Ambiente** no terminal do PowerShell:
+   ```powershell
+   $env:JAVA_HOME="C:\Program Files\Microsoft\jdk-17.0.20.8-hotspot"
+   $env:ANDROID_HOME="C:\Users\Alessandro\AppData\Local\Android\Sdk"
+   $env:Path="$env:JAVA_HOME\bin;C:\Users\Alessandro\AppData\AndroidCLI;" + $env:Path
+   ```
+
+2. **Compilar o APK** em modo release:
+   ```powershell
+   cd android
+   .\gradlew.bat assembleRelease
+   ```
+
+O Gradle ira gerar o arquivo APK na pasta de outputs com o nome ja taggeado com a versao, por exemplo:
+👉 `android/app/build/outputs/apk/release/BeepApp-v1.0.3-release.apk`
+
+---
+
+## ⚡ Atalho de Instalação via ADB (Xiaomi/MIUI Bypass)
+
+Para pular as verificacoes demoradas de seguranca do instalador nativo da Xiaomi ao instalar o APK local, conecte o celular no USB e rode:
+
+```powershell
+& "C:\Users\Alessandro\AppData\Local\Android\Sdk\platform-tools\adb.exe" install -r android/app/build/outputs/apk/release/BeepApp-v1.0.3-release.apk
+```
+
+---
+
+## 🔄 Como Publicar Atualizações OTA (EAS Update)
+
+Para enviar mudancas de JavaScript/Design para o celular de forma instantanea sem precisar gerar e baixar um novo APK:
+
+```powershell
+eas update --channel preview --platform android --message "Descreva suas alteracoes aqui"
+```
+*(Certifique-se de estar logado na sua conta da Expo via `eas login`).*
+
+---
+
+## 📁 Estrutura de Pastas Chave
+
+* **`app/`**: Rotas e telas organizadas pelo Expo Router.
+  * `app/index.tsx`: Tela de boas-vindas e onboarding inteligente.
+  * `app/tv-chat.tsx`: Interface do chat integrada com a TV.
+  * `app/tv-remote.tsx`: Tela de controle remoto da TV.
+  * `app/(tabs)/`: Telas principais acessiveis pela Tab Bar (Home, Social, Carteira, Perfil).
+* **`src/`**: Componentes e contextos compartilhados do aplicativo.
+  * `src/components/PairingContainer.tsx`: Componente de vinculo com a TV (PIN/QR Code).
+  * `src/contexts/SocketContext.tsx`: Gerenciador de estado do WebSocket com a TV BeepApp.
+  * `src/components/TVRemote.tsx`: Componentes de botoes e D-Pad do controle.
