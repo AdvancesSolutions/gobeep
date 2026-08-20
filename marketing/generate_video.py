@@ -226,6 +226,193 @@ def draw_wave(draw: ImageDraw.ImageDraw, x: int, y: int, width: int, color: str 
     line(draw, points, color, 3)
 
 
+# ---------------------------------------------------------------------------
+# Recreated app screens
+# ---------------------------------------------------------------------------
+# The original phone screenshots supplied for the first cut are not available
+# as workspace files in every environment. These compact UI mockups reproduce
+# their main information architecture and visual language so the video can be
+# rebuilt from the repository alone.
+SCREEN_W, SCREEN_H = 360, 690
+
+
+def screen_header(image: Image.Image, title: str, dark: bool = False) -> None:
+    draw = ImageDraw.Draw(image)
+    text(draw, (30, 42), "‹", 42, WHITE if dark else BLACK, False, "mm")
+    paste_logo(image, (65, 24), 30)
+    text(draw, (108, 48), title, 21, WHITE if dark else BLACK, True, "lm")
+
+
+def screen_nav(image: Image.Image, active: int, dark: bool = False) -> None:
+    draw = ImageDraw.Draw(image)
+    y = SCREEN_H - 72
+    rounded(draw, (14, y, SCREEN_W - 14, SCREEN_H - 12), BLACK, 28)
+    labels = ("⌂", "♧", "◉", "▣", "♙")
+    xs = (55, 125, 180, 235, 305)
+    for index, (x, label) in enumerate(zip(xs, labels)):
+        if index == active:
+            circle(draw, (x, y + 32), 25, YELLOW, 255, BLACK, 3)
+            text(draw, (x, y + 33), label, 22, BLACK, True, "mm")
+        else:
+            text(draw, (x, y + 33), label, 21, YELLOW, False, "mm")
+
+
+def app_screen(kind: str) -> Image.Image:
+    image = Image.new("RGBA", (SCREEN_W, SCREEN_H), rgb("#F5F5F3"))
+    draw = ImageDraw.Draw(image)
+    if kind == "home":
+        rounded(draw, (0, 0, SCREEN_W, 315), "#1D1D1D", 34)
+        paste_logo(image, (24, 24), 36)
+        rounded(draw, (82, 30, 178, 62), "#57501A", 16)
+        text(draw, (130, 46), "REDE BEEP", 11, YELLOW, True, "mm")
+        rounded(draw, (238, 28, 330, 66), "#F6EEDB", 19)
+        text(draw, (284, 47), "♜ 120", 14, "#A98100", True, "mm")
+        text(draw, (28, 108), "Boa tarde, Alessandro", 20, WHITE, True)
+        card(image, (20, 138, 340, 293), "#2A2A2A", 255, WHITE, 55, 18)
+        text(draw, (40, 168), "Sessões este mês", 13, "#BEBEBE", True)
+        text(draw, (40, 223), "47", 50, WHITE, True)
+        text(draw, (40, 252), "8 sessões a mais que no mês anterior", 11, "#BEBEBE")
+        for x, value, label in ((36, "312", "faixas"), (145, "8", "rádios"), (254, "4", "TVs")):
+            rounded(draw, (x, 322, x + 96, 397), "#424242", 16)
+            text(draw, (x + 48, 346), value, 18, WHITE, True, "mm")
+            text(draw, (x + 48, 375), label, 11, "#BEBEBE", False, "mm")
+        for x, symbol, label in ((47, "ϟ", "Ao Vivo"), (120, "▥", "Histórico"), (205, "➤", "Emissoras"), (295, "♜", "Ranking")):
+            circle(draw, (x, 462), 23, "#303030")
+            text(draw, (x, 463), symbol, 19, WHITE, True, "mm")
+            text(draw, (x, 501), label, 10, "#5F5F5F", True, "ma")
+        text(draw, (22, 545), "Rádio e TV Favoritos", 16, BLACK, True)
+        for x, label, sub, symbol in ((20, "Rádio Cidade FM", "98.5 FM", "◉"), (137, "TV Globo", "Canal 5", "▣"), (254, "Band FM", "96.1 FM", "◉")):
+            rounded(draw, (x, 562, x + 105, 625), WHITE, 14, "#E2E2E2", 1)
+            text(draw, (x + 52, 582), symbol, 18, YELLOW, True, "mm")
+            text(draw, (x + 52, 606), label, 9, BLACK, True, "mm")
+            text(draw, (x + 52, 619), sub, 8, "#777777", False, "mm")
+        screen_nav(image, 0, True)
+    elif kind == "profile":
+        rounded(draw, (0, 0, SCREEN_W, 286), "#1D1D1D", 34)
+        screen_header(image, "Meu Perfil", True)
+        rounded(draw, (25, 116, 82, 173), YELLOW, 12)
+        circle(draw, (54, 145), 20, WHITE)
+        text(draw, (54, 151), "A", 18, BLACK, True, "mm")
+        text(draw, (100, 122), "Alessandro", 21, WHITE, True)
+        rounded(draw, (100, 151, 181, 178), "#5A4F13", 13)
+        text(draw, (140, 165), "♜ Nível 1", 10, YELLOW, True, "mm")
+        text(draw, (191, 167), "120 Bips", 11, "#AAAAAA")
+        text(draw, (100, 204), "XP", 10, "#A7A7A7")
+        rounded(draw, (100, 218, 264, 226), "#424242", 4)
+        rounded(draw, (100, 218, 132, 226), YELLOW, 4)
+        text(draw, (270, 225), "0 / 100", 10, YELLOW, True, "ra")
+        rounded(draw, (288, 137, 340, 174), "#3B3515", 14)
+        text(draw, (314, 157), "Editar", 10, YELLOW, True, "mm")
+        for x, value, label, color in ((20, "0", "AVALIAÇÕES", "#AAAAAA"), (124, "0", "RECONHECIMENTOS", YELLOW), (228, "0", "SESSÕES", RED)):
+            rounded(draw, (x, 242, x + 108, 324), "#2A2A2A", 16, color, 1)
+            text(draw, (x + 54, 267), value, 23, WHITE if color == "#AAAAAA" else color, True, "mm")
+            text(draw, (x + 54, 299), label, 9, color, True, "mm")
+        text(draw, (20, 357), "ACESSO INSTITUCIONAL", 12, "#777777", True)
+        rows = (("♜", "Criador de Apostas", "Crie desafios para a comunidade."), ("☆", "Anunciante", "Crie e gerencie campanhas."), ("♧", "Gabinete do Político", "Painel institucional para mandatos."), ("▣", "Apresentador de TV", "Comande a atração."), ("≡", "Diretor", "Painel de direção e operação."))
+        for i, (symbol, label, desc) in enumerate(rows):
+            y = 378 + i * 55
+            rounded(draw, (20, y, 340, y + 47), WHITE, 14, "#E0E0E0", 1)
+            rounded(draw, (32, y + 9, 58, y + 38), "#FFF8DD", 10)
+            text(draw, (45, y + 24), symbol, 16, YELLOW, True, "mm")
+            text(draw, (72, y + 18), label, 11, BLACK, True)
+            text(draw, (72, y + 35), desc, 8, "#777777")
+            text(draw, (320, y + 25), "›", 22, YELLOW, True, "mm")
+        screen_nav(image, 4)
+    elif kind == "social":
+        screen_header(image, "Feed Social", False)
+        text(draw, (22, 92), "O que a rede está assistindo", 15, BLACK, True)
+        posts = (("Mariana S.", "Está assistindo Jornal Nacional na TV Globo."), ("Lucas M.", "Está ouvindo Programa Pânico na Jovem Pan FM."), ("Beatriz A.", "Acabou de reconhecer uma faixa."))
+        for i, (name, body) in enumerate(posts):
+            y = 120 + i * 172
+            rounded(draw, (18, y, 342, y + 154), WHITE, 18, "#E0E0E0", 1)
+            circle(draw, (43, y + 31), 16, "#B7C5D4")
+            text(draw, (43, y + 37), name[0], 13, WHITE, True, "mm")
+            text(draw, (68, y + 25), name, 11, BLACK, True)
+            text(draw, (68, y + 42), f"{6 + i * 7} min atrás", 8, "#777777")
+            text(draw, (30, y + 72), body, 10, BLACK)
+            rounded(draw, (30, y + 88, 330, y + 128), "#E8E8E8", 12)
+            rounded(draw, (42, y + 100, 125, y + 120), "#8D8D8D", 10)
+            text(draw, (84, y + 110), "TV / RÁDIO", 8, WHITE, True, "mm")
+            text(draw, (42, y + 145), "♡  12       ◯  2                         ↗", 11, "#777777")
+        screen_nav(image, 1)
+    elif kind == "wallet":
+        screen_header(image, "Carteira", False)
+        rounded(draw, (20, 104, 340, 224), YELLOW, 18)
+        text(draw, (42, 137), "▣  SALDO DISPONÍVEL", 12, "#5E4B00", True)
+        text(draw, (42, 190), "120", 42, BLACK, True)
+        text(draw, (132, 190), "pts", 13, BLACK, True)
+        rounded(draw, (40, 199, 103, 220), "#E8B900", 11)
+        text(draw, (71, 209), "↙ +90", 9, BLACK, True, "mm")
+        rounded(draw, (110, 199, 174, 220), "#E8B900", 11)
+        text(draw, (142, 209), "↗ -80", 9, BLACK, True, "mm")
+        for x, symbol, label in ((20, "➤", "Transferir"), (190, "⚿", "Beepix")):
+            rounded(draw, (x, 242, x + 150, 305), WHITE, 14, "#E0E0E0", 1)
+            text(draw, (x + 25, 273), symbol, 18, YELLOW, True, "mm")
+            text(draw, (x + 88, 268), label, 12, BLACK, True, "mm")
+            text(draw, (x + 88, 287), "Enviar pontos", 8, "#777777", False, "mm")
+        text(draw, (22, 345), "Loja de Recompensas", 15, BLACK, True)
+        for x, label, value in ((20, "Burger King", "500 Bips"), (185, "iFood", "1000 Bips")):
+            rounded(draw, (x, 363, x + 150, 442), WHITE, 14, "#E0E0E0", 1)
+            text(draw, (x + 14, 390), label, 12, BLACK, True)
+            text(draw, (x + 14, 414), value, 12, YELLOW, True)
+        text(draw, (22, 480), "Extrato", 15, BLACK, True)
+        for i, (label, amount) in enumerate((("Reconhecimento", "+15 pts"), ("Bônus diário", "+10 pts"), ("Resgate", "-50 pts"))):
+            y = 498 + i * 42
+            rounded(draw, (20, y, 340, y + 34), WHITE, 10, "#E0E0E0", 1)
+            text(draw, (34, y + 13), label, 10, BLACK, True)
+            text(draw, (325, y + 13), amount, 10, GREEN if amount.startswith("+") else RED, True, "ra")
+        screen_nav(image, 3)
+    elif kind == "remote":
+        screen_header(image, "Controle Remoto", False)
+        rounded(draw, (20, 104, 340, 211), YELLOW, 18)
+        text(draw, (40, 132), "▣  STATUS DA CONEXÃO", 12, "#5E4B00", True)
+        rounded(draw, (268, 119, 323, 146), "#D8B400", 13)
+        text(draw, (296, 133), "● ONLINE", 9, "#315414", True, "mm")
+        text(draw, (40, 172), "PIN: 646464", 23, BLACK, True)
+        text(draw, (40, 193), "TV pareada e pronta para comandos", 9, "#5E4B00")
+        for x, label in ((20, "Auto-Parear"), (190, "Sincronizar")):
+            rounded(draw, (x, 230, x + 150, 284), WHITE, 14, "#E0E0E0", 1)
+            text(draw, (x + 18, 257), "ϟ" if x == 20 else "⟳", 18, YELLOW, True, "mm")
+            text(draw, (x + 88, 255), label, 10, BLACK, True, "mm")
+            text(draw, (x + 88, 272), "Atualizar dados", 7, "#777777", False, "mm")
+        text(draw, (22, 326), "TVs Salvas (1)", 15, BLACK, True)
+        rounded(draw, (20, 346, 118, 421), "#FFF8DD", 14, YELLOW, 1)
+        text(draw, (69, 370), "▣", 22, YELLOW, True, "mm")
+        text(draw, (69, 393), "TV 646464", 10, BLACK, True, "mm")
+        text(draw, (69, 408), "ATIVA", 8, YELLOW, True, "mm")
+        text(draw, (22, 455), "Controle da TV", 15, BLACK, True)
+        rounded(draw, (20, 478, 340, 574), WHITE, 16, "#E0E0E0", 1)
+        text(draw, (38, 506), "CANAIS DISPONÍVEIS NA TV", 10, BLACK, True)
+        rounded(draw, (38, 520, 322, 550), "#E9E9E9", 10)
+        text(draw, (53, 535), "Buscar canal...", 9, "#888888", False, "lm")
+        for x, label in ((40, "Rádio Cidade FM"), (143, "TV Globo"), (246, "Band FM")):
+            rounded(draw, (x, 588, x + 90, 627), "#F0F0F0", 10)
+            text(draw, (x + 45, 602), "▣", 13, YELLOW, True, "mm")
+            text(draw, (x + 45, 619), label[:12], 7, BLACK, True, "mm")
+        screen_nav(image, 2)
+    else:
+        text(draw, (30, 50), "BEEPAPP", 24, YELLOW, True)
+    return image
+
+
+def paste_app_phone(image: Image.Image, xy: tuple[int, int], width: int, kind: str) -> None:
+    height = round(width * 2.03)
+    x, y = xy
+    shadow = Image.new("RGBA", image.size, (0, 0, 0, 0))
+    shadow_draw = ImageDraw.Draw(shadow)
+    rounded(shadow_draw, (x + 8, y + 14, x + width + 8, y + height + 14), BLACK, 34, None, 0, 110)
+    shadow = shadow.filter(ImageFilter.GaussianBlur(12))
+    image.alpha_composite(shadow)
+    draw = ImageDraw.Draw(image)
+    rounded(draw, (x, y, x + width, y + height), "#07080B", 34, WHITE, 3)
+    screen = app_screen(kind).resize((width - 18, height - 38), Image.Resampling.LANCZOS)
+    mask = Image.new("L", screen.size, 0)
+    ImageDraw.Draw(mask).rounded_rectangle((0, 0, screen.width, screen.height), radius=25, fill=255)
+    screen.putalpha(mask)
+    image.alpha_composite(screen, (x + 9, y + 18))
+    rounded(draw, (x + width / 2 - 30, y + 21, x + width / 2 + 30, y + 29), "#050506", 4)
+
+
 def scene_intro() -> Image.Image:
     image = hex_background()
     draw = ImageDraw.Draw(image)
@@ -267,6 +454,8 @@ def scene_radio() -> Image.Image:
     line(draw, ((78, 859), (642, 859)), WHITE, 1, 38)
     text(draw, (80, 898), "12 faixas identificadas", 15, WHITE, True)
     text(draw, (638, 898), "+20 pts", 16, YELLOW, True, "ra")
+    # Recreated home dashboard based on the supplied app screenshot.
+    paste_app_phone(image, (430, 560), 250, "home")
     text(draw, (40, 1030), "RECONHEÇA  •  SALVE  •  COMPARTILHE", 14, WHITE, True)
     text(draw, (40, 1073), "Sua programação também conversa com você.", 20, WHITE)
     return image
@@ -334,7 +523,8 @@ def scene_pairing() -> Image.Image:
     draw = ImageDraw.Draw(image)
     text(draw, (40, 250), "Uma tela.\nVários jeitos\nde participar.", 46, WHITE, True, "la", 6)
     draw_tv_frame(draw, 42, 518, 470, 286)
-    draw_phone(draw, 406, 408, 268, 558)
+    # Use the recreated remote screen in the phone instead of a generic UI.
+    paste_app_phone(image, (406, 408), 268, "remote")
     text(draw, (40, 930), "Controle canais, volume e favoritos.", 19, WHITE, True)
     text(draw, (40, 964), "Tudo sincronizado em tempo real.", 19, YELLOW_2, True)
     card(image, (40, 1044, 680, 1152), "#15171D", 255, WHITE, 32, 20)
@@ -382,6 +572,8 @@ def scene_live() -> Image.Image:
     rounded(draw, (392, 780, 476, 789), BLUE, 5)
     rounded(draw, (392, 830, 654, 870), "#22262E", 12)
     text(draw, (523, 856), "VOTAR", 11, WHITE, True, "mm")
+    # Recreated social feed based on the supplied Feed Social screenshot.
+    paste_app_phone(image, (370, 518), 300, "social")
     text(draw, (40, 1012), "REAÇÕES  •  ENQUETES  •  CHAT", 14, WHITE, True)
     text(draw, (40, 1056), "Faça parte do que está acontecendo.", 20, WHITE, True)
     circle(draw, (610, 1098), 28, YELLOW, 40)
@@ -416,6 +608,8 @@ def scene_points() -> Image.Image:
     text(draw, (392, 888), "ÚLTIMO GANHO", 12, MUTED, True)
     text(draw, (392, 944), "+20 pts", 30, GREEN, True)
     text(draw, (392, 977), "Programa detectado", 13, WHITE, True)
+    # Recreated wallet screen based on the supplied Carteira screenshot.
+    paste_app_phone(image, (390, 515), 290, "wallet")
     text(draw, (40, 1112), "A experiência fica melhor quando você participa.", 18, WHITE, True)
     return image
 
@@ -444,6 +638,8 @@ def scene_ecosystem() -> Image.Image:
         text(draw, (132, y + 43), label, 14, WHITE, True)
         text(draw, (132, y + 70), description, 13, MUTED)
         text(draw, (640, y + 58), "→", 25, color, anchor="ra")
+    # Recreated profile and institutional-access screen based on the supplied screenshot.
+    paste_app_phone(image, (385, 520), 290, "profile")
     return image
 
 

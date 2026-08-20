@@ -20,3 +20,5 @@ O script procura o `ffmpeg` no `PATH`. Para indicar um binário específico, use
 ## Mensagem
 
 O vídeo apresenta o BeepApp como o companheiro móvel do ecossistema BEEP: reconhecimento de conteúdo de rádio e TV, pareamento com Smart TVs por PIN ou QR Code, controle remoto, chat ao vivo, enquetes, reações e gamificação por pontos. Também destaca os painéis para fãs, diretores, apresentadores e anunciantes.
+
+A versão atual inclui mockups recriados a partir das telas fornecidas: início, perfil, Feed Social, Carteira e Controle Remoto. Os mockups são desenhados pelo próprio `generate_video.py`, para que o vídeo continue reproduzível sem depender dos anexos da conversa.
